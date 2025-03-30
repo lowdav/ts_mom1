@@ -25,15 +25,18 @@ main {
     background-color: #f3f9f5;
 }
 
-
 input {
     width: 100%;
 }
 
-
 .header {
     font-weight: 700;
     text-decoration: underline;
+}
+
+#info {
+    display: none;
+    color: red;
 }
 
 

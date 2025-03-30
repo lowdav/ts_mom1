@@ -1,3 +1,11 @@
+//variabler
+const info = document.getElementById("info") as HTMLDivElement;
+const code = document.getElementById("code") as HTMLInputElement;
+const coursename = document.getElementById("name") as HTMLInputElement;
+const progression = document.getElementById("progression") as HTMLSelectElement;
+const syllabus = document.getElementById("syllabus") as HTMLInputElement;
+const button = document.getElementById("button") as HTMLButtonElement;
+
 //Enum för kursprogression
 //Minnesanteckning: Enum (enumeration) är en lista på tillåtna värden.
 //Min enum nedan har jag gjort till strängbaserad genom att tilldela en sträng
@@ -18,61 +26,41 @@ interface course {
     syllabus: string;
 }
 
-// Pseudokod för localstorage
-// 1 hämta innehåll från local storage - spara som array
-// 2 kontroll att arrayen inte är tom, annars skriv ut till DOM
-// 3 när en kurs läggs till, kolla att kurskoden inte redan finns i local storage/arrayen
-// 4 uppdatera local storage, skriv ut kursen till DOM
-
-
-
-
-
-
 //skapar en array med objekt av typ course (mitt interface)
 const courses: course[] = [];
 
-//variabler för att hämta inputvärden
-const code = document.getElementById("code") as HTMLInputElement;
-const coursename = document.getElementById("name") as HTMLInputElement;
-const progression = document.getElementById("progression") as HTMLSelectElement;
-const syllabus = document.getElementById("syllabus") as HTMLInputElement;
-const button = document.getElementById("button") as HTMLButtonElement;
 
+
+// hämtar innehåll från local storage - sparar i courses-arrayen
+
+function loadSavedCourses(): void {
+    const savedCourses = localStorage.getItem("savedcourses");
+
+// 2 kontroll att arrayen inte är tom, annars skriv ut till DOM
+
+if (savedCourses !== null) {
+    try {
+        const coursesArr: course[] = JSON.parse(savedCourses);
+        coursesArr.forEach((course) => {
+            courses.push(course);
+            console.log(course);
+            printInput(course);
+        })
+    } catch (error) {
+        console.error("Något gick fel när local storage skulle läsas in."), error;
+    }
+} else {
+    info.style.display = "block";
+}
+};
+
+loadSavedCourses();
 
 //eventlyssnare som anropar funktionen för utskrift 
 button.addEventListener("click", collectInput);
 
 
-// const testArr: course[] = [
-//     {
-//       code: "DT057G",
-//       name: "Webbutveckling I",
-//       progression: progression_values.A,
-//       syllabus: "https://test"
-//     },
-//     {
-//       code: "DT084G",
-//       name: "Webbutveckling II",
-//       progression: progression_values.B,
-//       syllabus: "https://test"
-//     },
-//     {
-//         code: "DT123",
-//         name: "Webbutveckling III",
-//         progression: progression_values.C,
-//         syllabus: "https://test"
-//       }
-//   ];
-
-
-//   const courses: course[] = testArr;
-
-//   courses.forEach(printInput); 
-
-
-
-
+// LÄGG TILL -  när en kurs läggs till, kolla att kurskoden inte redan finns i local storage/arrayen
 
 function collectInput(): void {
 //Kursobjekt
@@ -84,10 +72,22 @@ const courseInput: course = {
     syllabus: syllabus.value,
 };
 
+//Lägger till courseInput i courses
 courses.push(courseInput);
 
+
+
+//skriver ut till DOM
 printInput(courseInput);
 
+
+//lagra i local storage
+saveCourses();
+
+//Tar bort info om att inga kurser finns
+info.style.display = "none";
+
+//rensa inputfälten
 code.value = "";
 coursename.value = "";
 progression.value = "A";
@@ -123,3 +123,9 @@ courselist.appendChild(courserow);
 
 console.log(courses);
 };
+
+
+//Spara i local storage
+function saveCourses(): void {
+    localStorage.setItem("savedcourses", JSON.stringify(courses));
+  }
