@@ -9,19 +9,23 @@
 <body>
     <main>
             <H1>Kurser</H1>
-            <div class="courserow header">
+            <div class="header">
                 <p class="header">Kurskod</p>
                 <p class="header">Kursnamn</p>
                 <p class="header">Progresseion</p>
                 <p class="header">Kursplan</p>
             </div>
-            <div id="courselist" class="courserow">
+            <div id="courselist">
             </div>
 <h2>Lägg till kurs</h2>
     <div class="inputcontainer">
     <input id="code" placeholder="Kurskod" type="text">
     <input id="name" placeholder="Kursnamn" type="text">
-    <input id="progression" placeholder="Progression (A-C)" type="text">
+    <select id="progression" required>
+        <option value="A">A</option>
+        <option value="B">B</option>
+        <option value="C">C</option>
+    </select>  
     <input id="syllabus"placeholder="Kursplan" type="text">
     </div>
     <button id="button">Lägg till</button>

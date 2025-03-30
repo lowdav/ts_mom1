@@ -18,6 +18,9 @@ interface course {
     syllabus: string;
 }
 
+//skapar en array med objekt av typ course (mitt interface)
+const courses: course[] = [];
+
 //variabler för att hämta inputvärden
 const code = document.getElementById("code") as HTMLInputElement;
 const coursename = document.getElementById("name") as HTMLInputElement;
@@ -26,9 +29,11 @@ const syllabus = document.getElementById("syllabus") as HTMLInputElement;
 const button = document.getElementById("button") as HTMLButtonElement;
 
 
-//testutskrift
-button.addEventListener("click", () => {
-    
+//eventlyssnare som anropar funktionen för utskrift 
+button.addEventListener("click", printInput);
+
+
+function printInput() {
 //Kursobjekt
 //progression value ska vara ett av enum värdena
 const courseInput: course = {
@@ -38,6 +43,37 @@ const courseInput: course = {
     syllabus: syllabus.value,
 };
 
+courses.push(courseInput);
 
-    console.log(courseInput);
-});
+const courselist = document.getElementById("courselist") as HTMLDivElement; 
+const courserow = document.createElement("div");
+courserow.className = "courserow";
+
+const codeInput = document.createElement("p");
+codeInput.textContent = code.value;
+
+const courseNameInput = document.createElement("p");
+courseNameInput.textContent = coursename.value;
+
+const progressionInput = document.createElement("p");
+progressionInput.textContent = progression.value;
+
+const syllabusInput = document.createElement("p");
+syllabusInput.textContent = syllabus.value;
+
+courserow.appendChild(codeInput);
+courserow.appendChild(courseNameInput);
+courserow.appendChild(progressionInput);
+courserow.appendChild(syllabusInput);
+
+courselist.appendChild(courserow);
+
+code.value = "";
+coursename.value = "";
+syllabus.value = "";
+
+
+console.log(courseInput);
+
+console.log(courses);
+};

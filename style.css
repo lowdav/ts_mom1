@@ -10,12 +10,21 @@ main {
     width: 90%;
     margin: auto;
 }
-
+.header,
 .courserow,
 .inputcontainer{
     display: grid;
     grid-template-columns: 1fr 2fr 1fr 2fr;
 }
+
+.courserow:nth-child(odd){
+    background-color: #e6f4ea;
+}
+
+.courserow:nth-child(even){
+    background-color: #f3f9f5;
+}
+
 
 input {
     width: 100%;
@@ -29,6 +38,7 @@ input {
 
 
 @media (max-width: 900px ) {
+    .header,
     .courserow,
     .inputcontainer{
         grid-template-columns: 1fr;
