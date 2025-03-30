@@ -1,0 +1,41 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+main {
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    margin: auto;
+}
+
+.courserow,
+.inputcontainer{
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr 2fr;
+}
+
+input {
+    width: 100%;
+}
+
+
+.header {
+    font-weight: 700;
+    text-decoration: underline;
+}
+
+
+@media (max-width: 900px ) {
+    .courserow,
+    .inputcontainer{
+        grid-template-columns: 1fr;
+        gap: 5px;
+    }
+
+    .header {
+        display: none;
+    }
+}
