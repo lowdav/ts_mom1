@@ -17,8 +17,22 @@ var progression = document.getElementById("progression");
 var syllabus = document.getElementById("syllabus");
 var button = document.getElementById("button");
 //eventlyssnare som anropar funktionen för utskrift 
-button.addEventListener("click", printInput);
-function printInput() {
+button.addEventListener("click", collectInput);
+// const testArr: course[] = [
+//     {
+//       code: "DT057G",
+//       name: "Webbutveckling I",
+//       progression: progression_values.A,
+//       syllabus: "https://test"
+//     },
+//     {
+//       code: "DT084G",
+//       name: "Webbutveckling II",
+//       progression: progression_values.B,
+//       syllabus: "https://test"
+//     }
+//   ];
+function collectInput() {
     //Kursobjekt
     //progression value ska vara ett av enum värdena
     var courseInput = {
@@ -28,17 +42,21 @@ function printInput() {
         syllabus: syllabus.value,
     };
     courses.push(courseInput);
+    printInput(courseInput);
+}
+;
+function printInput(course) {
     var courselist = document.getElementById("courselist");
     var courserow = document.createElement("div");
     courserow.className = "courserow";
     var codeInput = document.createElement("p");
-    codeInput.textContent = code.value;
+    codeInput.textContent = course.code;
     var courseNameInput = document.createElement("p");
-    courseNameInput.textContent = coursename.value;
+    courseNameInput.textContent = course.name;
     var progressionInput = document.createElement("p");
-    progressionInput.textContent = progression.value;
+    progressionInput.textContent = course.progression;
     var syllabusInput = document.createElement("p");
-    syllabusInput.textContent = syllabus.value;
+    syllabusInput.textContent = course.syllabus;
     courserow.appendChild(codeInput);
     courserow.appendChild(courseNameInput);
     courserow.appendChild(progressionInput);
@@ -47,7 +65,6 @@ function printInput() {
     code.value = "";
     coursename.value = "";
     syllabus.value = "";
-    console.log(courseInput);
     console.log(courses);
 }
 ;

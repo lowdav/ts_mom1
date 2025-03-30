@@ -24,16 +24,33 @@ const courses: course[] = [];
 //variabler för att hämta inputvärden
 const code = document.getElementById("code") as HTMLInputElement;
 const coursename = document.getElementById("name") as HTMLInputElement;
-const progression = document.getElementById("progression") as HTMLInputElement;
+const progression = document.getElementById("progression") as HTMLSelectElement;
 const syllabus = document.getElementById("syllabus") as HTMLInputElement;
 const button = document.getElementById("button") as HTMLButtonElement;
 
 
 //eventlyssnare som anropar funktionen för utskrift 
-button.addEventListener("click", printInput);
+button.addEventListener("click", collectInput);
 
 
-function printInput() {
+// const testArr: course[] = [
+//     {
+//       code: "DT057G",
+//       name: "Webbutveckling I",
+//       progression: progression_values.A,
+//       syllabus: "https://test"
+//     },
+//     {
+//       code: "DT084G",
+//       name: "Webbutveckling II",
+//       progression: progression_values.B,
+//       syllabus: "https://test"
+//     }
+//   ];
+
+
+
+function collectInput(): void {
 //Kursobjekt
 //progression value ska vara ett av enum värdena
 const courseInput: course = {
@@ -45,21 +62,28 @@ const courseInput: course = {
 
 courses.push(courseInput);
 
+printInput(courseInput);
+
+};
+
+
+function printInput(course: course): void {
+
 const courselist = document.getElementById("courselist") as HTMLDivElement; 
 const courserow = document.createElement("div");
 courserow.className = "courserow";
 
 const codeInput = document.createElement("p");
-codeInput.textContent = code.value;
+codeInput.textContent = course.code;
 
 const courseNameInput = document.createElement("p");
-courseNameInput.textContent = coursename.value;
+courseNameInput.textContent = course.name;
 
 const progressionInput = document.createElement("p");
-progressionInput.textContent = progression.value;
+progressionInput.textContent = course.progression;
 
 const syllabusInput = document.createElement("p");
-syllabusInput.textContent = syllabus.value;
+syllabusInput.textContent = course.syllabus;
 
 courserow.appendChild(codeInput);
 courserow.appendChild(courseNameInput);
@@ -70,10 +94,8 @@ courselist.appendChild(courserow);
 
 code.value = "";
 coursename.value = "";
+progression.value = "A";
 syllabus.value = "";
-
-
-console.log(courseInput);
 
 console.log(courses);
 };
