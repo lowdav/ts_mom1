@@ -18,8 +18,19 @@ interface course {
     syllabus: string;
 }
 
+// Pseudokod för localstorage
+// 1 hämta innehåll från local storage - spara som array
+// 2 kontroll att arrayen inte är tom, annars skriv ut till DOM
+// 3 när en kurs läggs till, kolla att kurskoden inte redan finns i local storage/arrayen
+// 4 uppdatera local storage, skriv ut kursen till DOM
+
+
+
+
+
+
 //skapar en array med objekt av typ course (mitt interface)
-// const courses: course[] = [];
+const courses: course[] = [];
 
 //variabler för att hämta inputvärden
 const code = document.getElementById("code") as HTMLInputElement;
@@ -33,31 +44,31 @@ const button = document.getElementById("button") as HTMLButtonElement;
 button.addEventListener("click", collectInput);
 
 
-const testArr: course[] = [
-    {
-      code: "DT057G",
-      name: "Webbutveckling I",
-      progression: progression_values.A,
-      syllabus: "https://test"
-    },
-    {
-      code: "DT084G",
-      name: "Webbutveckling II",
-      progression: progression_values.B,
-      syllabus: "https://test"
-    },
-    {
-        code: "DT123",
-        name: "Webbutveckling III",
-        progression: progression_values.C,
-        syllabus: "https://test"
-      }
-  ];
+// const testArr: course[] = [
+//     {
+//       code: "DT057G",
+//       name: "Webbutveckling I",
+//       progression: progression_values.A,
+//       syllabus: "https://test"
+//     },
+//     {
+//       code: "DT084G",
+//       name: "Webbutveckling II",
+//       progression: progression_values.B,
+//       syllabus: "https://test"
+//     },
+//     {
+//         code: "DT123",
+//         name: "Webbutveckling III",
+//         progression: progression_values.C,
+//         syllabus: "https://test"
+//       }
+//   ];
 
 
-  const courses: course[] = testArr;
+//   const courses: course[] = testArr;
 
-  courses.forEach(printInput); 
+//   courses.forEach(printInput); 
 
 
 
