@@ -19,7 +19,7 @@ interface course {
 }
 
 //skapar en array med objekt av typ course (mitt interface)
-const courses: course[] = [];
+// const courses: course[] = [];
 
 //variabler för att hämta inputvärden
 const code = document.getElementById("code") as HTMLInputElement;
@@ -33,20 +33,33 @@ const button = document.getElementById("button") as HTMLButtonElement;
 button.addEventListener("click", collectInput);
 
 
-// const testArr: course[] = [
-//     {
-//       code: "DT057G",
-//       name: "Webbutveckling I",
-//       progression: progression_values.A,
-//       syllabus: "https://test"
-//     },
-//     {
-//       code: "DT084G",
-//       name: "Webbutveckling II",
-//       progression: progression_values.B,
-//       syllabus: "https://test"
-//     }
-//   ];
+const testArr: course[] = [
+    {
+      code: "DT057G",
+      name: "Webbutveckling I",
+      progression: progression_values.A,
+      syllabus: "https://test"
+    },
+    {
+      code: "DT084G",
+      name: "Webbutveckling II",
+      progression: progression_values.B,
+      syllabus: "https://test"
+    },
+    {
+        code: "DT123",
+        name: "Webbutveckling III",
+        progression: progression_values.C,
+        syllabus: "https://test"
+      }
+  ];
+
+
+  const courses: course[] = testArr;
+
+  courses.forEach(printInput); 
+
+
 
 
 
@@ -63,6 +76,11 @@ const courseInput: course = {
 courses.push(courseInput);
 
 printInput(courseInput);
+
+code.value = "";
+coursename.value = "";
+progression.value = "A";
+syllabus.value = "";
 
 };
 
@@ -91,11 +109,6 @@ courserow.appendChild(progressionInput);
 courserow.appendChild(syllabusInput);
 
 courselist.appendChild(courserow);
-
-code.value = "";
-coursename.value = "";
-progression.value = "A";
-syllabus.value = "";
 
 console.log(courses);
 };

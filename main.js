@@ -9,7 +9,7 @@ var progression_values;
     progression_values["C"] = "C";
 })(progression_values || (progression_values = {}));
 //skapar en array med objekt av typ course (mitt interface)
-var courses = [];
+// const courses: course[] = [];
 //variabler för att hämta inputvärden
 var code = document.getElementById("code");
 var coursename = document.getElementById("name");
@@ -18,20 +18,28 @@ var syllabus = document.getElementById("syllabus");
 var button = document.getElementById("button");
 //eventlyssnare som anropar funktionen för utskrift 
 button.addEventListener("click", collectInput);
-// const testArr: course[] = [
-//     {
-//       code: "DT057G",
-//       name: "Webbutveckling I",
-//       progression: progression_values.A,
-//       syllabus: "https://test"
-//     },
-//     {
-//       code: "DT084G",
-//       name: "Webbutveckling II",
-//       progression: progression_values.B,
-//       syllabus: "https://test"
-//     }
-//   ];
+var testArr = [
+    {
+        code: "DT057G",
+        name: "Webbutveckling I",
+        progression: progression_values.A,
+        syllabus: "https://test"
+    },
+    {
+        code: "DT084G",
+        name: "Webbutveckling II",
+        progression: progression_values.B,
+        syllabus: "https://test"
+    },
+    {
+        code: "DT123",
+        name: "Webbutveckling III",
+        progression: progression_values.C,
+        syllabus: "https://test"
+    }
+];
+var courses = testArr;
+courses.forEach(printInput);
 function collectInput() {
     //Kursobjekt
     //progression value ska vara ett av enum värdena
@@ -43,6 +51,10 @@ function collectInput() {
     };
     courses.push(courseInput);
     printInput(courseInput);
+    code.value = "";
+    coursename.value = "";
+    progression.value = "A";
+    syllabus.value = "";
 }
 ;
 function printInput(course) {
@@ -62,9 +74,6 @@ function printInput(course) {
     courserow.appendChild(progressionInput);
     courserow.appendChild(syllabusInput);
     courselist.appendChild(courserow);
-    code.value = "";
-    coursename.value = "";
-    syllabus.value = "";
     console.log(courses);
 }
 ;
