@@ -1,5 +1,6 @@
 //variabler
-const info = document.getElementById("info") as HTMLDivElement;
+const header = document.getElementById("header") as HTMLDivElement;
+const info = document.getElementById("info") as HTMLParagraphElement;
 const code = document.getElementById("code") as HTMLInputElement;
 const coursename = document.getElementById("name") as HTMLInputElement;
 const progression = document.getElementById("progression") as HTMLSelectElement;
@@ -36,7 +37,7 @@ const courses: course[] = [];
 function loadSavedCourses(): void {
     const savedCourses = localStorage.getItem("savedcourses");
 
-// 2 kontroll att arrayen inte är tom, annars skriv ut till DOM
+// kontroll att arrayen inte är tom, annars skriv ut till DOM
 
 if (savedCourses !== null) {
     try {
@@ -50,6 +51,8 @@ if (savedCourses !== null) {
         console.error("Något gick fel när local storage skulle läsas in."), error;
     }
 } else {
+    header.style.display = "none";
+    info.textContent = "Inga kurser finns lagrade i localstorage";
     info.style.display = "block";
 }
 };
@@ -57,10 +60,18 @@ if (savedCourses !== null) {
 loadSavedCourses();
 
 //eventlyssnare som anropar funktionen för utskrift 
-button.addEventListener("click", collectInput);
+button.addEventListener("click", checkNotEmpty);
 
-
-// LÄGG TILL -  när en kurs läggs till, kolla att kurskoden inte redan finns i local storage/arrayen
+//kolla att inputfälten inte är tomma
+function checkNotEmpty(): void {
+    if (!code.value.trim() || !coursename.value.trim() || !syllabus.value.trim()) {
+        info.textContent = "Fyll i alla fält!";
+        info.style.display = "block";
+        return;
+      } else {
+        collectInput();
+      }   
+}
 
 function collectInput(): void {
 //Kursobjekt
@@ -72,20 +83,25 @@ const courseInput: course = {
     syllabus: syllabus.value,
 };
 
+if (courses.some(item => item.code.toLowerCase() === courseInput.code.toLowerCase())) {
+    info.textContent = "En kurs med samma kurskod finns redan registrerad";
+    info.style.display = "block";
+    return;
+  }
+
 //Lägger till courseInput i courses
 courses.push(courseInput);
-
-
 
 //skriver ut till DOM
 printInput(courseInput);
 
-
 //lagra i local storage
 saveCourses();
 
-//Tar bort info om att inga kurser finns
-info.style.display = "none";
+//Tar bort ev felmeddelanden
+info.textContent = "Kursen sparades till local storage";
+info.style.display = "block";
+
 
 //rensa inputfälten
 code.value = "";
@@ -98,6 +114,7 @@ syllabus.value = "";
 
 function printInput(course: course): void {
 
+header.style.display = "grid";    
 const courselist = document.getElementById("courselist") as HTMLDivElement; 
 const courserow = document.createElement("div");
 courserow.className = "courserow";
@@ -121,7 +138,6 @@ courserow.appendChild(syllabusInput);
 
 courselist.appendChild(courserow);
 
-console.log(courses);
 };
 
 

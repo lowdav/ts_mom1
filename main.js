@@ -1,10 +1,11 @@
 //variabler
-var info = document.getElementById("info");
-var code = document.getElementById("code");
-var coursename = document.getElementById("name");
-var progression = document.getElementById("progression");
-var syllabus = document.getElementById("syllabus");
-var button = document.getElementById("button");
+const header = document.getElementById("header");
+const info = document.getElementById("info");
+const code = document.getElementById("code");
+const coursename = document.getElementById("name");
+const progression = document.getElementById("progression");
+const syllabus = document.getElementById("syllabus");
+const button = document.getElementById("button");
 //Enum för kursprogression
 //Minnesanteckning: Enum (enumeration) är en lista på tillåtna värden.
 //Min enum nedan har jag gjort till strängbaserad genom att tilldela en sträng
@@ -16,15 +17,15 @@ var progression_values;
     progression_values["C"] = "C";
 })(progression_values || (progression_values = {}));
 //skapar en array med objekt av typ course (mitt interface)
-var courses = [];
+const courses = [];
 // hämtar innehåll från local storage - sparar i courses-arrayen
 function loadSavedCourses() {
-    var savedCourses = localStorage.getItem("savedcourses");
-    // 2 kontroll att arrayen inte är tom, annars skriv ut till DOM
+    const savedCourses = localStorage.getItem("savedcourses");
+    // kontroll att arrayen inte är tom, annars skriv ut till DOM
     if (savedCourses !== null) {
         try {
-            var coursesArr = JSON.parse(savedCourses);
-            coursesArr.forEach(function (course) {
+            const coursesArr = JSON.parse(savedCourses);
+            coursesArr.forEach((course) => {
                 courses.push(course);
                 console.log(course);
                 printInput(course);
@@ -35,31 +36,49 @@ function loadSavedCourses() {
         }
     }
     else {
+        header.style.display = "none";
+        info.textContent = "Inga kurser finns lagrade i localstorage";
         info.style.display = "block";
     }
 }
 ;
 loadSavedCourses();
 //eventlyssnare som anropar funktionen för utskrift 
-button.addEventListener("click", collectInput);
-// LÄGG TILL -  när en kurs läggs till, kolla att kurskoden inte redan finns i local storage/arrayen
+button.addEventListener("click", checkNotEmpty);
+//kolla att inputfälten inte är tomma
+function checkNotEmpty() {
+    if (!code.value.trim() || !coursename.value.trim() || !syllabus.value.trim()) {
+        info.textContent = "Fyll i alla fält!";
+        info.style.display = "block";
+        return;
+    }
+    else {
+        collectInput();
+    }
+}
 function collectInput() {
     //Kursobjekt
     //progression value ska vara ett av enum värdena
-    var courseInput = {
+    const courseInput = {
         code: code.value,
         name: coursename.value,
         progression: progression.value,
         syllabus: syllabus.value,
     };
+    if (courses.some(item => item.code.toLowerCase() === courseInput.code.toLowerCase())) {
+        info.textContent = "En kurs med samma kurskod finns redan registrerad";
+        info.style.display = "block";
+        return;
+    }
     //Lägger till courseInput i courses
     courses.push(courseInput);
     //skriver ut till DOM
     printInput(courseInput);
     //lagra i local storage
     saveCourses();
-    //Tar bort info om att inga kurser finns
-    info.style.display = "none";
+    //Tar bort ev felmeddelanden
+    info.textContent = "Kursen sparades till local storage";
+    info.style.display = "block";
     //rensa inputfälten
     code.value = "";
     coursename.value = "";
@@ -68,23 +87,23 @@ function collectInput() {
 }
 ;
 function printInput(course) {
-    var courselist = document.getElementById("courselist");
-    var courserow = document.createElement("div");
+    header.style.display = "grid";
+    const courselist = document.getElementById("courselist");
+    const courserow = document.createElement("div");
     courserow.className = "courserow";
-    var codeInput = document.createElement("p");
+    const codeInput = document.createElement("p");
     codeInput.textContent = course.code;
-    var courseNameInput = document.createElement("p");
+    const courseNameInput = document.createElement("p");
     courseNameInput.textContent = course.name;
-    var progressionInput = document.createElement("p");
+    const progressionInput = document.createElement("p");
     progressionInput.textContent = course.progression;
-    var syllabusInput = document.createElement("p");
+    const syllabusInput = document.createElement("p");
     syllabusInput.textContent = course.syllabus;
     courserow.appendChild(codeInput);
     courserow.appendChild(courseNameInput);
     courserow.appendChild(progressionInput);
     courserow.appendChild(syllabusInput);
     courselist.appendChild(courserow);
-    console.log(courses);
 }
 ;
 //Spara i local storage
